@@ -1,0 +1,742 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<title>InterGDance</title>
+    <style>
+        body {
+            background-color:#ffffff;
+            margin: 0;
+            padding: 0;
+        }
+    
+        header {
+            color: #000000;       
+            padding: 20px;
+            text-align: center;
+        }
+    
+        h1 {
+            margin: 0;
+            font-size: 40px;
+        }    
+        
+        h2 {
+            padding-top: 10px; 
+            color: #3d3d3d;
+            margin: 0 auto; 
+            text-align: center;
+            font-size: 35px;
+        }
+
+        section {
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 20px;
+        }     
+    
+        section:nth-child(even) {
+            background-color: #f6f6f6;
+        }
+    
+        section:nth-child(odd) {
+            background-color: #ffffff;
+        }
+    
+        h3 {
+            font-size: 25px;
+            margin: 20px 0;
+            text-align: center;
+            font-family:'Times New Roman', Times, serif;
+        }
+
+        h4 {
+            font-size: 30px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        section p {
+            font-size: 18px;
+            text-align: justify;
+            margin-left: 390px;
+            margin-right: 390px;
+            line-height: 1.5;
+            font-family: 'Noto Sans', sans-serif;
+
+        }
+    
+        .buttons a {
+            text-decoration: none;
+            color: white; 
+            background-color: #515151; 
+            border: 1px solid white; 
+            padding: 8px 16px; 
+            margin: 15px 20px; 
+            display: inline-block; 
+            font-size: 16px; 
+            transition: background-color 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .buttons a:hover {
+            background-color: #555; 
+        }
+
+        .buttons a svg {
+            vertical-align: middle; 
+        }
+
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+    
+        .image-container img {
+            max-width: 60%;
+            height: auto;
+            margin: 10px;
+        }
+    
+        .image-container .subtitle {
+            margin-top: 10px;
+            font-size: 18px;
+            width: 50%;
+            text-align: left;
+            margin-left: 390px;
+            margin-right: 390px;
+            line-height: 1.5;
+        }
+    
+         /* 修改视频的样式 */
+        .video-container video {
+            width: 100%;  
+            height: auto; /* 保持宽高比 */
+            border-radius: 10px; 
+        }
+
+        .video-container video {
+            width: 100%;  
+            height: auto;  
+            border-radius: 10px; 
+        }
+    
+        .video-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; 
+            align-items: flex-start; 
+            gap: 10px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+
+        /* 修改 .slider-container 样式来调整视频排布 */
+        .slider-container {
+            display: flex; 
+            gap: 10px; /* 控制视频之间的间距 */
+            overflow-x: hidden; /* 去除滚动条 */
+            justify-content: center; /* 居中排列视频 */
+        }
+
+        /* 修改 .slider-item 样式来控制视频的宽度 */
+        .slider-item {
+            position: relative; /* 确保子元素可以绝对定位 */
+            width: 30%; /* 固定每个视频容器的宽度 */
+            box-sizing: border-box; /* 确保宽度计算包括内边距和边框 */
+        }
+
+        .slider-navigation-previous,
+        .slider-navigation-next {
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            z-index: 10;
+            cursor: pointer; 
+            background-color: #ffffff; 
+            border-radius: 50%; 
+            width: 30px; 
+            height: 30px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease; 
+        }
+
+        .slider-navigation-previous {
+            left: 0px; 
+        }
+
+        .slider-navigation-next {
+            right: 0px; 
+        }
+
+        .slider-navigation-previous svg,
+        .slider-navigation-next svg {
+            width: 15px; 
+            height: 15px;
+            fill: rgb(85, 85, 85); 
+            transition: transform 0.3s ease; 
+        }
+
+        .slider-navigation-previous:hover svg,
+        .slider-navigation-next:hover svg,
+        .slider-pagination .slider-page:hover {
+            transform: scale(1.1); 
+        }
+
+        .slider-navigation-previous:hover,
+        .slider-navigation-next:hover {
+            background-color: #ddd; 
+        }
+
+        .slider-pagination {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+
+        .slider-pagination .slider-page {
+            background-color: #FFF;
+            width: 10px;  
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 5px;
+            transition: transform 300ms ease;
+            cursor: pointer; 
+        }
+
+        .slider-pagination .slider-page.is-active {
+            transform: scale(1.3);
+        }
+
+        .bibtex {
+            text-align: left;
+            font-size: 16px;
+            font-family: monospace;
+            background-color: #f5f5f5;
+            overflow-x: auto;
+            padding: 5px 15px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .video-wrapper {
+                flex-direction: column;
+            }
+
+            .video-container {
+                min-width: 100%; 
+                padding: 0 10px; 
+                min-height: auto; 
+            }
+
+            .video-container video {
+                width: 100%; 
+            }
+        }
+
+        /* 样式用于视频上方的文字 */
+        .video-caption {
+            font-size: 12px; /* 小字大小 */
+            color: #666; /* 设置文字颜色 */
+            position: absolute; /* 绝对定位文字 */
+            top: -20px; /* 调整文字距离视频的距离 */
+            left: 50%; /* 水平居中 */
+            transform: translateX(-50%); /* 水平居中对齐 */
+            white-space: nowrap; /* 防止文字换行 */
+            font-family: Arial, sans-serif; /* 设置字体 */
+            z-index: 10; /* 确保文字显示在前面 */
+        }
+
+        /* FIXME: 文字调整部分 */
+        /* 负值让文字向左移动，调整数值达到理想效果: 不行, 屏幕大小一变就完蛋了 */
+        .left-adjust {
+            margin-left: 250px; /* 负值让文字向左移动，调整数值达到理想效果 */
+        }   
+        .centered-text {
+    color: rgb(40, 39, 39); /* 设置文字颜色 */
+    font-size: 18px; /* 调整字体大小 */
+    text-align: center; /* 确保文字居中 */
+    z-index: 10; /* 确保文字显示在视频上方 */
+    pointer-events: none; /* 使文字不会影响视频控件的操作 */
+    margin: 0; /* 去除默认的外边距 */
+        }
+
+.video {
+    display: flex;
+    justify-content: center; /* 水平居中对齐 */
+    align-items: center; /* 垂直居中对齐 */
+    flex-direction: column; /* 垂直排列文字和视频 */
+    position: relative; /* 为内部布局设置相对定位 */
+    gap: 5px; /* 控制文字与视频之间的间距 */
+}
+
+    </style>
+    <style type="text/css">
+        .cubox-extension-helper-button {
+            position: absolute !important;
+            display: none;
+            width: 26px !important;
+            height: 26px !important;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #C6C6C6;
+            border-radius: 6px !important;
+            background: #fff !important;
+            z-index: 99999999999999999999 !important;
+            cursor: pointer;
+            filter: drop-shadow(1px 2px 8px rgba(0, 0, 0, 0.15));
+            transition: border-color .2s ease;
+        }
+        
+        .cubox-extension-helper-button:hover {
+            border-color: #636363;
+        }
+        
+        .cubox-extension-helper-button svg {
+            pointer-events: none;
+            opacity: .8 !important;
+            transition: opacity .2s ease;
+        }
+        
+        .cubox-extension-helper-button:hover svg {
+            opacity: 1 !important;
+        }  
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>InterGDance: Music-Driven Interaction-Controllable Group Choreography</h1>
+        <br>
+        <div id="author-list">
+            <a>Anonymous submission</a>&nbsp;&nbsp;&nbsp;
+         
+        </div>
+    </header>
+    
+    <section>
+        <h2>Abstract</h2>
+        <p> Music-driven group dance choreography has gained significant attention in both cultural entertainment and academia. Unlike solo dance, the interactions among participants in larger ensembles foster a more immersive experience. However, existing methods either fail to scale effectively in large groups or struggle to preserve interaction patterns.
+            To address this, we introduce InterGDance, a highly scalable framework that enables control over interactions.
+            To ensure scalability, we propose a novel approach that scales to an arbitrary number of dancers by progressively adding new dancers based on the existing ensemble.
+            To facilitate interaction design, we introduce an interaction-controllable generation approach. Additionally, we present a rule-based method for automatically identifying interaction patterns, which can both provide interaction priors and enable the automated evaluation of whether the generated results conform to specific interaction patterns.
+            Extensive experiments demonstrate that our method achieves state-of-the-art results. 
+            Code will be made available. 
+        </p>
+    </section>
+
+    <!-- <section>
+        <h2>InterGDance Paradigm</h2>
+        <div class="video-container" style="text-align: center;">
+            <div class="video" style="width: 60%; margin: 0 auto;">
+                <video autoplay loop muted controls>
+                    <source src="resource\problem_def.mp4" type="video/mp4">
+                </video>
+            </div>   
+        </div>
+    </section> -->
+
+    <section>
+        <h2>Demo</h2>
+        <div class="video-container" style="text-align: center;">
+            <div class="video" style="width: 60%; margin: 0 auto;">
+                <video autoplay loop muted controls>
+                    <source src="resource\freecompress-demo_origin.mp4" type="video/mp4">
+                </video>
+            </div>   
+        </div>
+        <p style="font-size: 12px; color: gray; text-align: center;">
+            **The group dance on page 2: <a href="https://www.youtube.com/watch?v=U9giZo0GBls" style="color: gray;">https://www.youtube.com/watch?v=U9giZo0GBls</a>
+          </p>
+    </section>
+
+    <section>
+        <h2>Generation Results</h2>
+        <h4><span style="color: rgb(84, 84, 247);">2</span>-Dancers</span></h4>
+        <div class="video-container">
+            <div class="slider-container">
+                <div class="slider-item" data-slider-index="1" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Swap"</p> -->
+                        <p class="centered-text">"Swap"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\2\24_BpPv3uUld24_01_0_1200_slice53.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="slider-item" data-slider-index="2" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Unsimilar"</p> -->
+                        <p class="centered-text">"Unsimilar"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\2\25_9GgtL-BL-GE_03_691_1710_slice4.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="slider-item" data-slider-index="3" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Unsimilar"</p> -->
+                        <p class="centered-text">"Unsimilar"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\2\15_0oOe8Qjieps_02_0_1290_slice71.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h4><span style="color: rgb(84, 84, 247);">3</span>-Dancers</h4>
+        <div class="video-container">
+            <div class="slider-container">
+                <div class="slider-item" data-slider-index="0" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Swap"</p> -->
+                        <p class="centered-text">"Swap"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\3\24_JxONoMvqUpQ_05_0_1494_slice22.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="slider-item" data-slider-index="1" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Unsimilar"</p> -->
+                        <p class="centered-text">"Unsimilar"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\3\16_lhgto3xo2c8_04_0_1260_slice29.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="slider-item" data-slider-index="2" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Similar"</p> -->
+                        <p class="centered-text">"Similar"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\3\1_5k-J9PavRI0_03_0_1860_slice111.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h4><span style="color: rgb(84, 84, 247);">4</span>-Dancers</h4>
+        <div class="video-container">
+            <div class="slider-container">
+                <div class="slider-item" data-slider-index="0" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Swap"</p> -->
+                        <p class="centered-text">"Swap"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\4\2_0oOe8Qjieps_02_0_1290_slice69_1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="slider-item" data-slider-index="1" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Unsimilar"</p> -->
+                        <p class="centered-text">"Unsimilar"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\4\7_8QvKh-jvI1I_09_0_1290_slice19.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="slider-item" data-slider-index="2" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Similar"</p> -->
+                        <p class="centered-text">"Similar"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\4\10_2YMv8SB0pXY_03_0_950_slice43.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+   
+        </div>
+
+        <h4><span style="color: rgb(84, 84, 247);">5</span>-Dancers</h4>
+        <div class="video-container">
+            <div class="slider-container">
+                <div class="slider-item" data-slider-index="0" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Swap"</p> -->
+                        <p class="centered-text">"Swap"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\5\3_CQhwdeOcwMI_03_0_606_slice25.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="slider-item" data-slider-index="1" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Swap"</p> -->
+                        <p class="centered-text">"Swap"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\5\20_KNqdxdAOLo0_03_0_1770_slice1_1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="slider-item" data-slider-index="2" data-cloned="true">                       
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Similar"</p> -->
+                        <p class="centered-text">"Similar"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\5\26_uitvYa5NsJI_18_0_1950_slice8.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <h4><span style="color: rgb(84, 84, 247);">Infinite</span>-Dancers</h4>
+        <div class="video-container">
+            <div class="slider-container">
+                <div class="slider-item" data-slider-index="0" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Similar"</p> -->
+                        <p class="centered-text">"Similar"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\infinit\1_5Y5L3FXkHVM_02_0_1290_slice35.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="slider-item" data-slider-index="1" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Swap"</p> -->
+                        <p class="centered-text">"Swap"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\infinit\25_2R8f-0RErCI_03_434_1230_slice16.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="slider-item" data-slider-index="2" data-cloned="true">                       
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Swap"</p> -->
+                        <p class="centered-text">"Swap"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\infinit\7_Gb-y_rl1b4k_02_706_1200_slice11.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section>
+        <h2>Same Music Different Priors</h2>
+        <div class="video-container">
+            <div class="slider-container">
+                <div class="slider-item" data-slider-index="0" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Similar"</p> -->
+                        <p class="centered-text">"Similar"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\swap_similar\similar.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="slider-item" data-slider-index="1" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Swap"</p> -->
+                        <p class="centered-text">"Swap"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\swap_similar\swap.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+        <div class="video-container">
+            <div class="slider-container">
+                <div class="slider-item" data-slider-index="0" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Similar"</p> -->
+                        <p class="centered-text">"Similar"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\unsimilar_similar\similar.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="slider-item" data-slider-index="1" data-cloned="true">
+                    <div class="video">
+                        <!-- <p class="left-adjust">"Unsimilar"</p> -->
+                        <p class="centered-text">"Unsimilar"</p>
+                        <video autoplay loop muted controls>
+                            <source src="resource\unsimilar_similar\unsimilar.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+
+    <section>
+        <h2>Long-term Generation Comparism</h2>
+        <h2></h2>
+        <div class="video-container" style="text-align: center;">
+            <div class="video" style="width: 60%; margin: 0 auto;">
+                <video autoplay loop muted controls>
+                    <source src="resource\compare.mp4" type="video/mp4">
+                </video>
+            </div>   
+        </div>
+        <!-- <h4>Ablation Study: Transformer vs. Ours</h4>
+        <div class="video-container" style="text-align: center;">
+            <div class="video" style="width: 60%; margin: 0 auto;">
+                <video autoplay loop muted controls>
+                    <source src="resource\mambavstrans.mp4" type="video/mp4">
+                </video>
+            </div>   
+        </div> -->
+    </section>
+
+    <section>
+        <h2>Paradigm</h2>
+        <div class="video-container" style="text-align: center;">
+            <div class="video" style="width: 60%; margin: 0 auto;">
+                <video autoplay loop muted controls>
+                    <source src="resource\paradigm.mp4" type="video/mp4">
+                </video>
+            </div>   
+        </div>
+    </section>
+
+    <section>
+        <div class="video-container" style="text-align: center;">
+            <div class="video" style="width: 60%; margin: 0 auto;">
+                <video autoplay loop muted controls>
+                    <source src="resource\scalable.mp4" type="video/mp4">
+                </video>
+            </div>   
+        </div>
+    </section>
+
+    <section>
+        <h2>Method</h2>
+        <!-- <div class="image-container">
+            <img src="pipline.png" alt="Image 2">
+            <p>
+                Overview of our InterGDance pipeline. Initially, our rule-based classification method splits the dataset by interaction patterns and assigns corresponding labels. Subsequently, InterGDance uses these labels for controllable interaction generation. 
+            <p>
+        </div> -->
+        <div class="video-container" style="text-align: center;">
+            <div class="video" style="width: 60%; margin: 0 auto;">
+                <video autoplay loop muted controls>
+                    <source src="resource\method.mp4" type="video/mp4">
+                </video>
+            </div>   
+        </div>
+    </section>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var sliderContainers = document.querySelectorAll('.video-container');
+
+            sliderContainers.forEach(function(container) {
+                var currentIndex = 0;
+                var sliderItems = container.querySelectorAll('.slider-item');
+                var sliderContainer = container.querySelector('.slider-container');
+                var prevNav = container.querySelector('.slider-navigation-previous');
+                var nextNav = container.querySelector('.slider-navigation-next');
+                var paginationDots = container.querySelectorAll('.slider-page');
+                
+                function updateSlider() {
+                    var itemWidth = container.offsetWidth / 2;
+                    sliderItems.forEach(function(item) {
+                        item.style.width = `${itemWidth}px`;
+                    });
+                    
+                    var clonedItems = container.querySelectorAll('.cloned');
+                    clonedItems.forEach(function(cloned) {
+                        cloned.remove();
+                    });
+
+                    var cloneCount = Math.ceil(container.offsetWidth / itemWidth);
+
+                    for (var i = 0; i < cloneCount; i++) {
+                        var clone = sliderItems[i].cloneNode(true);
+                        clone.classList.add('cloned');
+                        sliderContainer.appendChild(clone);
+                    }
+                    
+                    var totalItems = sliderItems.length + cloneCount;
+                    sliderContainer.style.width = `${totalItems * itemWidth}px`;
+
+                    updateSliderPosition(currentIndex);
+                }
+
+                function updateSliderPosition(index) {
+                    var itemWidth = container.offsetWidth / 2; 
+                    var newTranslateX = -(index * itemWidth);
+                    sliderContainer.style.transform = `translateX(${newTranslateX}px)`;
+                }
+
+                function updatePagination(index) {
+                    paginationDots.forEach(function(dot, dotIndex) {
+                        dot.classList.toggle('is-active', dotIndex === index);
+                    });
+                }
+
+                prevNav.addEventListener('click', function() {
+                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : sliderItems.length - 1;
+                    updateSliderPosition(currentIndex);
+                    updatePagination(currentIndex);
+                });
+
+                nextNav.addEventListener('click', function() {
+                    currentIndex = (currentIndex < sliderItems.length - 1) ? currentIndex + 1 : 0;
+                    updateSliderPosition(currentIndex);
+                    updatePagination(currentIndex);
+                });
+
+                paginationDots.forEach(function(dot, index) {
+                    dot.addEventListener('click', function() {
+                        currentIndex = index;
+                        updateSliderPosition(currentIndex);
+                        updatePagination(currentIndex);
+                    });
+                });
+
+                updateSlider();
+
+                window.addEventListener('resize', updateSlider);
+            });
+        });
+
+    </script>
+
+</body>
+
+<div>
+    <div class="cubox-extension-helper-button" style="display: none;">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_1219_9015)">
+                <mask id="mask0_1219_9015" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1" y="1" width="16" height="16">
+                    <path d="M9.77158 1.35001C13.0094 1.35001 14.6283 1.35001 15.6341 2.35586C16.64 3.36172 16.64 4.98062 16.64 8.21842V9.77158C16.64 13.0094 16.64 14.6283 15.6341 15.6341C14.6283 16.64 13.0094 16.64 9.77158 16.64H8.21842C4.98062 16.64 3.36172 16.64 2.35586 15.6341C1.35001 14.6283 1.35001 13.0094 1.35001 9.77158L1.35001 8.21842C1.35001 4.98062 1.35001 3.36172 2.35586 2.35586C3.36172 1.35001 4.98062 1.35001 8.21842 1.35001L9.77158 1.35001Z" fill="#D9D9D9"></path>
+                </mask>
+                <g mask="url(#mask0_1219_9015)">
+                    <ellipse cx="8.52658" cy="11.8882" rx="0.433911" ry="0.508873" fill="black"></ellipse>
+                    <ellipse cx="6.0803" cy="11.8883" rx="0.433911" ry="0.508873" fill="black"></ellipse>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.6727 14.412C14.6047 18.3796 12.1926 18.3772 9.0904 18.3743L8.832 18.3741C5.60628 18.3741 3.93861 17.6814 3.93861 14.161C3.93861 10.4926 5.60628 7.76974 8.832 7.76974C12.0577 7.76974 14.6727 10.7436 14.6727 14.412ZM9.8879 11.8935C9.8879 12.5374 9.40796 13.0594 8.81593 13.0594C8.2239 13.0594 7.74397 12.5374 7.74397 11.8935C7.74397 11.2496 8.2239 10.7276 8.81593 10.7276C9.40796 10.7276 9.8879 11.2496 9.8879 11.8935ZM6.33438 13.0593C6.907 13.0593 7.3712 12.5374 7.3712 11.8935C7.3712 11.2496 6.907 10.7276 6.33438 10.7276C5.76176 10.7276 5.29756 11.2496 5.29756 11.8935C5.29756 12.5374 5.76176 13.0593 6.33438 13.0593Z" fill="black"></path>
+                </g>
+                <path d="M9.77158 2.00975C11.4091 2.00975 12.5709 2.01115 13.4519 2.1296C14.314 2.2455 14.8077 2.46246 15.1676 2.82237C15.5275 3.18229 15.7445 3.67605 15.8604 4.53807C15.9789 5.41908 15.9803 6.58087 15.9803 8.21842V9.77158C15.9803 11.4091 15.9789 12.5709 15.8604 13.4519C15.7445 14.314 15.5275 14.8077 15.1676 15.1676C14.8077 15.5275 14.314 15.7445 13.4519 15.8604C12.5709 15.9789 11.4091 15.9803 9.77158 15.9803H8.21842C6.58087 15.9803 5.41908 15.9789 4.53807 15.8604C3.67605 15.7445 3.18229 15.5275 2.82237 15.1676C2.46246 14.8077 2.2455 14.314 2.1296 13.4519C2.01115 12.5709 2.00975 11.4091 2.00975 9.77158V8.21842C2.00975 6.58087 2.01115 5.41908 2.1296 4.53807C2.2455 3.67605 2.46246 3.18229 2.82237 2.82237C3.18229 2.46246 3.67605 2.2455 4.53807 2.1296C5.41908 2.01115 6.58087 2.00975 8.21842 2.00975H9.77158Z" stroke="black" stroke-width="1.3195"></path>
+            </g>
+            <defs>
+                <clipPath id="clip0_1219_9015">
+                    <rect width="15.29" height="15.29" fill="white" transform="translate(1.35001 1.35001)"></rect>
+                </clipPath>
+            </defs>
+        </svg>
+    </div>
+</div>
+
+</html>
