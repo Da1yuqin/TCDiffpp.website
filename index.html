@@ -327,6 +327,23 @@
         </p>
     </section>
 
+        
+    <section>
+        <h2>Framework</h2>
+        <div class="image-container">
+            <img src="resources\pipeline.jpg" alt="Image 2">
+            <p>
+                Our end-to-end TCDiff++ framework comprises two key components: the Group Dance Decoder (GDD) and the Footwork Adaptor (FA). 
+                The GDD initially generates a raw motion sequence without trajectory overlap based on the given music. 
+                Subsequently, the FA refines the foot movements by leveraging the positional information of the raw motion, 
+                producing an adapted motion with improved footstep actions to reduce foot sliding. 
+                Finally, the adapted footstep movements are incorporated into the raw motion, 
+                yielding a harmonious dance sequence with stable footwork and less dancer collisions. 
+                Compared to the previous two-stage version, TCDiff++ requires only a single training stage, demonstrating better footwork-motion coherence performance.
+            <p>
+        </div>
+    </section>
+
     <section>
         <h2>Generate Results</h2>
         <h4><span style="color: rgb(84, 84, 247);">2</span>-Dancers</span></h4>  
@@ -547,22 +564,6 @@
                 which are then merged to form a complete sequence. Unlike naive sampling, LGDS enforces consistency during the input phase rather than the sampling phase. 
                 This approach reduces randomness and ensures cleaner positional information during generation, thereby reducing abrupt swap.
             </p>
-        </div>
-    </section>
-    
-    <section>
-        <h2>Framework</h2>
-        <div class="image-container">
-            <img src="resources\pipeline.jpg" alt="Image 2">
-            <p>
-                Our end-to-end TCDiff++ framework comprises two key components: the Group Dance Decoder (GDD) and the Footwork Adaptor (FA). 
-                The GDD initially generates a raw motion sequence without trajectory overlap based on the given music. 
-                Subsequently, the FA refines the foot movements by leveraging the positional information of the raw motion, 
-                producing an adapted motion with improved footstep actions to reduce foot sliding. 
-                Finally, the adapted footstep movements are incorporated into the raw motion, 
-                yielding a harmonious dance sequence with stable footwork and less dancer collisions. 
-                Compared to the previous two-stage version, TCDiff++ requires only a single training stage, demonstrating better footwork-motion coherence performance.
-            <p>
         </div>
     </section>
 
